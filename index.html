@@ -307,6 +307,110 @@ body {
   font-style: italic;
 }
 
+/* ── NOTICE ── */
+.notice-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+
+.notice-item {
+  background: var(--navy-card);
+  border: 1px solid rgba(91,157,245,0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.notice-item:hover { border-color: rgba(201,168,76,0.35); }
+
+.notice-item.open { border-color: rgba(201,168,76,0.4); }
+
+.notice-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+.notice-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.badge-update { background: rgba(58,111,216,0.25); color: #7eb5ff; border: 1px solid rgba(58,111,216,0.4); }
+.badge-event  { background: rgba(201,168,76,0.2);  color: var(--gold-light); border: 1px solid rgba(201,168,76,0.4); }
+.badge-patch  { background: rgba(39,174,96,0.2);   color: #7ddfaa; border: 1px solid rgba(39,174,96,0.4); }
+.badge-notice { background: rgba(160,100,220,0.2); color: #c9a0f5; border: 1px solid rgba(160,100,220,0.4); }
+
+.notice-meta { flex: 1; }
+
+.notice-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 2px;
+}
+
+.notice-date {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.notice-arrow {
+  font-size: 11px;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.notice-item.open .notice-arrow { transform: rotate(180deg); }
+
+.notice-body {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.notice-item.open .notice-body { display: block; }
+
+.notice-body p {
+  font-size: 13.5px;
+  color: var(--text-body);
+  line-height: 1.85;
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+
+.notice-body ul {
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.notice-body li {
+  font-size: 13.5px;
+  color: var(--text-body);
+  line-height: 1.8;
+  margin-bottom: 4px;
+}
+
+.notice-body strong { color: var(--gold-light); font-weight: 600; }
+
+.notice-img-placeholder {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(135deg, rgba(58,111,216,0.15), rgba(201,168,76,0.1));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 12px 0;
+  border: 1px dashed rgba(201,168,76,0.2);
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--navy); }
@@ -418,7 +522,8 @@ body {
 <div class="main">
   <!-- Top Nav -->
   <div class="topnav">
-    <div class="nav-tab active" onclick="switchPage('support', this)" data-i18n="tab_support"></div>
+    <div class="nav-tab" onclick="switchPage('notice', this)" data-i18n="tab_notice"></div>
+    <div class="nav-tab" onclick="switchPage('support', this)" data-i18n="tab_support"></div>
     <div class="nav-tab" onclick="switchPage('terms', this)" data-i18n="tab_terms"></div>
     <div class="nav-tab" onclick="switchPage('privacy', this)" data-i18n="tab_privacy"></div>
   </div>
@@ -426,8 +531,103 @@ body {
   <!-- Content -->
   <div class="content">
 
-    <!-- 고객센터 -->
-    <div class="page-section active" id="page-support">
+    <!-- 공지사항 -->
+    <div class="page-section active" id="page-notice">
+      <div class="page-title" data-i18n="notice_title"></div>
+      <div class="page-subtitle" data-i18n="notice_subtitle"></div>
+
+      <div class="notice-list">
+
+        <!-- 공지 1: 업데이트 -->
+        <div class="notice-item open">
+          <div class="notice-header" onclick="toggleNotice(this.parentElement)">
+            <span class="notice-badge badge-update" data-i18n="badge_update"></span>
+            <div class="notice-meta">
+              <div class="notice-title" data-i18n="notice1_title"></div>
+              <div class="notice-date">2025.04.01</div>
+            </div>
+            <span class="notice-arrow">▼</span>
+          </div>
+          <div class="notice-body">
+            <div class="notice-img-placeholder">⚔️</div>
+            <p data-i18n="notice1_body1"></p>
+            <ul>
+              <li data-i18n="notice1_li1"></li>
+              <li data-i18n="notice1_li2"></li>
+              <li data-i18n="notice1_li3"></li>
+              <li data-i18n="notice1_li4"></li>
+            </ul>
+            <p data-i18n="notice1_body2"></p>
+          </div>
+        </div>
+
+        <!-- 공지 2: 이벤트 -->
+        <div class="notice-item">
+          <div class="notice-header" onclick="toggleNotice(this.parentElement)">
+            <span class="notice-badge badge-event" data-i18n="badge_event"></span>
+            <div class="notice-meta">
+              <div class="notice-title" data-i18n="notice2_title"></div>
+              <div class="notice-date">2025.03.28</div>
+            </div>
+            <span class="notice-arrow">▼</span>
+          </div>
+          <div class="notice-body">
+            <div class="notice-img-placeholder">🎁</div>
+            <p data-i18n="notice2_body1"></p>
+            <ul>
+              <li data-i18n="notice2_li1"></li>
+              <li data-i18n="notice2_li2"></li>
+              <li data-i18n="notice2_li3"></li>
+            </ul>
+            <p data-i18n="notice2_body2"></p>
+          </div>
+        </div>
+
+        <!-- 공지 3: 패치노트 -->
+        <div class="notice-item">
+          <div class="notice-header" onclick="toggleNotice(this.parentElement)">
+            <span class="notice-badge badge-patch" data-i18n="badge_patch"></span>
+            <div class="notice-meta">
+              <div class="notice-title" data-i18n="notice3_title"></div>
+              <div class="notice-date">2025.03.20</div>
+            </div>
+            <span class="notice-arrow">▼</span>
+          </div>
+          <div class="notice-body">
+            <p data-i18n="notice3_body1"></p>
+            <ul>
+              <li data-i18n="notice3_li1"></li>
+              <li data-i18n="notice3_li2"></li>
+              <li data-i18n="notice3_li3"></li>
+              <li data-i18n="notice3_li4"></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 공지 4: 공지 -->
+        <div class="notice-item">
+          <div class="notice-header" onclick="toggleNotice(this.parentElement)">
+            <span class="notice-badge badge-notice" data-i18n="badge_notice"></span>
+            <div class="notice-meta">
+              <div class="notice-title" data-i18n="notice4_title"></div>
+              <div class="notice-date">2025.03.15</div>
+            </div>
+            <span class="notice-arrow">▼</span>
+          </div>
+          <div class="notice-body">
+            <p data-i18n="notice4_body1"></p>
+            <ul>
+              <li data-i18n="notice4_li1"></li>
+              <li data-i18n="notice4_li2"></li>
+              <li data-i18n="notice4_li3"></li>
+            </ul>
+            <p data-i18n="notice4_body2"></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="page-section" id="page-support">
       <div class="page-title" data-i18n="support_title"></div>
       <div class="page-subtitle" data-i18n="support_subtitle"></div>
 
@@ -531,8 +731,8 @@ body {
       </div>
     </div>
 
-    <!-- 개인 정보 처리 방침 -->
-    <div class="page-section" id="page-privacy">
+    <!-- 개인정보처리방침 -->
+    <div class="page-section active" id="page-privacy">
       <div class="page-title" data-i18n="privacy_title"></div>
       <div class="page-subtitle" data-i18n="privacy_subtitle"></div>
       <div class="doc-date" data-i18n="effective_date"></div>
@@ -582,9 +782,45 @@ body {
 /* ─── i18n DATA ─── */
 const i18n = {
   ko: {
+    tab_notice: '공지사항',
     tab_support: '고객센터',
     tab_terms: '서비스 이용약관',
-    tab_privacy: '개인 정보 처리 방침',
+    tab_privacy: '개인정보 처리방침',
+
+    notice_title: '공지사항',
+    notice_subtitle: '게임의 최신 소식과 업데이트 정보를 확인하세요.',
+    badge_update: 'UPDATE',
+    badge_event: 'EVENT',
+    badge_patch: 'PATCH',
+    badge_notice: 'NOTICE',
+    notice1_title: '[업데이트] 신규 길드 시즌 및 전장 지역 추가',
+    notice1_body1: '안녕하세요, 영주님. 4월 대규모 업데이트 내용을 안내드립니다.',
+    notice1_li1: '신규 전장 지역 "폐허의 협곡" 오픈 — 최대 120명 동시 전투 지원',
+    notice1_li2: '길드 시즌 3 시작 — 시즌 전용 보상 및 랭킹 시스템 개편',
+    notice1_li3: '신규 영웅 "칠흑의 기사 다리우스" 출시',
+    notice1_li4: '영웅 각성 시스템 추가 — 5성 영웅 각성 가능',
+    notice1_body2: '업데이트는 4월 1일 점검 이후 자동 적용됩니다. 점검 시간: 04:00 ~ 08:00 (UTC+9)',
+
+    notice2_title: '[이벤트] 봄맞이 로그인 보상 & 길드 전쟁 챔피언십',
+    notice2_body1: '봄 시즌을 맞아 특별 로그인 이벤트와 길드 전쟁 챔피언십이 개최됩니다.',
+    notice2_li1: '7일 연속 로그인 보상: 전설 소환석 3개 + 골드 500,000',
+    notice2_li2: '길드 전쟁 챔피언십: 3/28 ~ 4/14, 상위 10개 길드에 전용 칭호 및 스킨 지급',
+    notice2_li3: '누적 접속 보상: 30일 누적 접속 시 신규 영웅 "여명의 아르테미스" 무료 지급',
+    notice2_body2: '이벤트 기간 종료 후 보상은 자동 소멸됩니다. 기간 내 수령을 잊지 마세요!',
+
+    notice3_title: '[패치노트] v2.4.1 밸런스 조정 및 버그 수정',
+    notice3_body1: 'v2.4.1 패치를 통해 다음 사항이 변경되었습니다:',
+    notice3_li1: '영웅 "이그니스" 스킬 데미지 15% 하향 조정',
+    notice3_li2: '길드전 자동 매칭 로직 개선 — 동일 전력대 우선 매칭',
+    notice3_li3: '특정 기기에서 전투 중 앱이 종료되는 버그 수정',
+    notice3_li4: '상점 일부 아이템 가격 표기 오류 수정',
+
+    notice4_title: '[안내] 개인정보처리방침 개정 안내',
+    notice4_body1: '2025년 4월 1일부로 개인정보처리방침 일부 내용이 개정됩니다. 주요 변경 사항은 다음과 같습니다:',
+    notice4_li1: '수집 항목에 "광고 식별자(ADID/IDFA)" 추가',
+    notice4_li2: '개인정보 보관 기간 명확화 (게임 계정 탈퇴 후 30일 이내 삭제)',
+    notice4_li3: '제3자 제공 목적 및 항목 구체화',
+    notice4_body2: '변경된 방침은 상단 "개인정보처리방침" 탭에서 확인하실 수 있습니다.',
 
     support_title: '고객센터',
     support_subtitle: '게임 이용 중 문제가 발생하셨나요? 아래 방법으로 도움을 받으실 수 있습니다.',
@@ -628,7 +864,7 @@ const i18n = {
     terms_s7_title: '제7조 (준거법 및 관할)',
     terms_s7_body: '본 약관의 해석 및 분쟁 해결은 대한민국 법률에 따르며, 소송이 제기되는 경우 서울중앙지방법원을 전속 관할 법원으로 합니다.',
 
-    privacy_title: '개인 정보 처리 방침',
+    privacy_title: '개인정보 처리방침',
     privacy_subtitle: '회사는 이용자의 개인정보를 소중히 보호합니다.',
     privacy_s1_title: '1. 수집하는 개인정보 항목',
     privacy_s1_body: '회사는 서비스 제공을 위해 다음과 같은 개인정보를 수집합니다:',
@@ -652,9 +888,45 @@ const i18n = {
   },
 
   en: {
+    tab_notice: 'Notice',
     tab_support: 'Support',
     tab_terms: 'Terms of Service',
     tab_privacy: 'Privacy Policy',
+
+    notice_title: 'Notice',
+    notice_subtitle: 'Stay up to date with the latest news and updates.',
+    badge_update: 'UPDATE',
+    badge_event: 'EVENT',
+    badge_patch: 'PATCH',
+    badge_notice: 'NOTICE',
+    notice1_title: '[Update] New Guild Season & Battle Region Added',
+    notice1_body1: 'Greetings, Lord. Here is what\'s coming in the April major update.',
+    notice1_li1: 'New battle region "Canyon of Ruins" — supports up to 120 simultaneous players',
+    notice1_li2: 'Guild Season 3 begins — new season rewards and revamped ranking system',
+    notice1_li3: 'New hero "Darius, the Black Knight" released',
+    notice1_li4: 'Hero Awakening system added — awaken 5-star heroes',
+    notice1_body2: 'The update will be applied automatically after maintenance on April 1. Maintenance window: 04:00–08:00 (UTC+9)',
+
+    notice2_title: '[Event] Spring Login Rewards & Guild War Championship',
+    notice2_body1: 'Celebrate the spring season with special login rewards and the Guild War Championship!',
+    notice2_li1: '7-day login reward: 3 Legendary Summon Stones + 500,000 Gold',
+    notice2_li2: 'Guild War Championship: Mar 28 – Apr 14. Top 10 guilds receive exclusive titles and skins',
+    notice2_li3: 'Cumulative login reward: 30 days total — get hero "Artemis of the Dawn" for free',
+    notice2_body2: 'Rewards expire when the event ends. Don\'t forget to claim them in time!',
+
+    notice3_title: '[Patch Notes] v2.4.1 Balance Adjustments & Bug Fixes',
+    notice3_body1: 'The following changes have been applied in patch v2.4.1:',
+    notice3_li1: 'Hero "Ignis" skill damage reduced by 15%',
+    notice3_li2: 'Guild war auto-matching improved — now prioritizes similar power levels',
+    notice3_li3: 'Fixed a crash occurring during combat on certain devices',
+    notice3_li4: 'Fixed incorrect price display for some shop items',
+
+    notice4_title: '[Notice] Privacy Policy Update',
+    notice4_body1: 'Our Privacy Policy will be updated effective April 1, 2025. Key changes include:',
+    notice4_li1: 'Addition of "Advertising Identifier (ADID/IDFA)" to collected data',
+    notice4_li2: 'Clarification of data retention period (deleted within 30 days after account deletion)',
+    notice4_li3: 'More specific details on third-party data sharing purposes',
+    notice4_body2: 'You can view the updated policy under the "Privacy Policy" tab above.',
 
     support_title: 'Customer Support',
     support_subtitle: 'Having trouble? We\'re here to help. Reach out using any of the options below.',
@@ -1727,9 +1999,16 @@ function toggleFaq(el) {
   item.classList.toggle('open');
 }
 
+/* ─── NOTICE TOGGLE ─── */
+function toggleNotice(item) {
+  item.classList.toggle('open');
+}
+
 /* ─── INIT ─── */
 window.onload = function() {
   applyLang('ko');
+  var noticeBtn = document.querySelector('.nav-tab:nth-child(1)');
+  switchPage('notice', noticeBtn);
 };
 </script>
 </body>
