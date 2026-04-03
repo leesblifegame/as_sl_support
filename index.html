@@ -532,7 +532,7 @@ body {
   <div class="content">
 
     <!-- 공지사항 -->
-    <div class="page-section active" id="page-notice">
+    <div class="page-section" id="page-notice">
       <div class="page-title" data-i18n="notice_title"></div>
       <div class="page-subtitle" data-i18n="notice_subtitle"></div>
 
@@ -1991,6 +1991,19 @@ function switchPage(page, btn) {
   document.getElementById('page-' + page).classList.add('active');
   document.querySelectorAll('.nav-tab').forEach(function(el) { el.classList.remove('active'); });
   btn.classList.add('active');
+  // URL 해시 업데이트
+  history.replaceState(null, '', '#' + page);
+}
+
+/* ─── HASH → PAGE 매핑 ─── */
+var pageTabIndex = { notice: 1, support: 2, terms: 3, privacy: 4 };
+
+function goToPage(page) {
+  var validPages = ['notice', 'support', 'terms', 'privacy'];
+  if (validPages.indexOf(page) === -1) page = 'privacy';
+  var idx = pageTabIndex[page];
+  var btn = document.querySelector('.nav-tab:nth-child(' + idx + ')');
+  switchPage(page, btn);
 }
 
 /* ─── FAQ TOGGLE ─── */
@@ -2007,9 +2020,16 @@ function toggleNotice(item) {
 /* ─── INIT ─── */
 window.onload = function() {
   applyLang('ko');
-  var noticeBtn = document.querySelector('.nav-tab:nth-child(1)');
-  switchPage('notice', noticeBtn);
+  // URL 해시가 있으면 해당 탭으로, 없으면 privacy 기본
+  var hash = window.location.hash.replace('#', '');
+  goToPage(hash || 'privacy');
 };
+
+// 브라우저 뒤로가기/앞으로가기 지원
+window.addEventListener('hashchange', function() {
+  var hash = window.location.hash.replace('#', '');
+  goToPage(hash || 'privacy');
+});
 </script>
 </body>
 </html>
